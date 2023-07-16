@@ -142,7 +142,7 @@ export default function Game() {
    }
 
    return (
-      <section onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
+      <section onTouchMove={e=>e.preventDefault()} onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
          {output.map((el, i) => <Square info={el} key={i} />)}
       </section>
    )
