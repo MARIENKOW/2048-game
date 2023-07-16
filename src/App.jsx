@@ -7,12 +7,13 @@ import help from './heplfulScripts'
 function App() {
   const [data, setData] = useState(startArray)
   const [score, setScore] = useState(0)
+  const [over, setOver] = useState({ display: 'none' })
 
   useEffect(() => addNewSquare(data), [])
 
   useEffect(() => {
     const onKeyPress = ({ code }) => {
-      document.body.style.overflow='hidden'
+      document.body.style.overflow = 'hidden'
       if (code === 'ArrowLeft' || code === 'ArrowRight' || code === 'ArrowUp' || code === 'ArrowDown') return addNewSquare(changes(code, data));
 
     }
@@ -24,7 +25,7 @@ function App() {
   }, [data])
   useEffect(() => {
     const onKeyPress = ({ code }) => {
-      document.body.style.overflow=''
+      document.body.style.overflow = ''
     }
     window.addEventListener('keyup', onKeyPress);
 
@@ -34,13 +35,13 @@ function App() {
   }, [data])
   useEffect(() => {
     if (help.takeEmpty(data).length === 0 && !changes('ArrowLeft', data) && !changes('ArrowRight', data) && !changes('ArrowUp', data) && !changes('ArrowDown', data)) {
-      alert('end');
+      setOver({ display: 'flex' })
     }
   }, [data])
 
 
   function changes(code, dataLink) {
-    if(!code || !dataLink) return;
+    if (!code || !dataLink) return;
 
     let dataCopy = JSON.parse(JSON.stringify(dataLink));
     let newData;
@@ -66,7 +67,7 @@ function App() {
   function moveSquare(value) {
     const newData = []
     let scoreCopy = score
-    if(!value)return
+    if (!value) return
     value.forEach(element => {
       const arr = Array(4).fill(null)
       let changed = null;
@@ -95,8 +96,8 @@ function App() {
     const dataCopy = JSON.parse(JSON.stringify(value));
     const arr = help.takeEmpty(value);
 
-    if(arr.length === 0) return setData(dataCopy);
-    
+    if (arr.length === 0) return setData(dataCopy);
+
     const random = help.randomValue(arr.length);
     const position = arr[random].split(',');
     dataCopy[position[0]][position[1]] = 2;
@@ -109,11 +110,19 @@ function App() {
     setData(dataCopy);
   }
 
+  function restart(){
+    setScore(0)
+    setOver({display:'none'})
+    addNewSquare(startArray)
+  }
+
   return (
-    <div className="App">
-      <h3 className={styles.score}>Score : {score}</h3>
-      <Game updateData={(value) => addNewSquare(changes(value, data))} data={data} />
-      <button></button>
+    <div className={styles.app}>
+      <section className={styles.control}>
+        <h3 className={styles.score}>Score : {score}</h3>
+        <button onClick={restart}>restart</button>
+      </section>
+      <Game over={over} updateData={(value) => addNewSquare(changes(value, data))} data={data} />
     </div>
   );
 }

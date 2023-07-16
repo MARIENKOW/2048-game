@@ -2,12 +2,30 @@
    display:grid;
    margin: 30px 0px 0px 0px;
    grid-template-columns: repeat(4,1fr);
-   max-width: 500px;
-   margin: auto;
-   padding: 20px;
+   padding: 15px;
    grid-template-rows: repeat(4,1fr);
-   color: #07b6dd;
-   gap: 20px;
+   gap: 15px;
    background-color: #bd9789;
    border-radius: 5px;
+   -webkit-touch-callout: none; /* iOS Safari */
+   -webkit-user-select: none;   /* Chrome/Safari/Opera */
+   -khtml-user-select: none;    /* Konqueror */
+   -moz-user-select: none;      /* Firefox */
+   -ms-user-select: none;       /* Internet Explorer/Edge */
+   user-select: none; 
+   position: relative;          /* Non-prefixed version, currently*/
+}
+.gameOver{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: #b38c8cc4;
+   text-align: center;
+   font-size: 35px;
+   font-weight: 600;
+   justify-content: center;
+   align-items: center;
+   color:#ffffff ;
 }

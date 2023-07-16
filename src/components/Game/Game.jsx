@@ -1,7 +1,7 @@
 import styles from './game.module.scss';
 import Square from '../Square/Square'
 
-export default function Game({data,updateData}) {
+export default function Game({data,updateData,over}) {
 
 
 
@@ -47,6 +47,7 @@ export default function Game({data,updateData}) {
    return (
       <section onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
          {output.map((el, i) => <Square info={el} key={i} />)}
+         <div style={over} className={styles.gameOver}>Game Over!</div>
       </section>
    )
 }
