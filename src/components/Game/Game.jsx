@@ -45,7 +45,7 @@ export default function Game({data,updateData,over}) {
    }
 
    return (
-      <section onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
+      <section onTouchMove={e=>e.preventDefault()} onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
          {output.map((el, i) => <Square info={el} key={i} />)}
          <div style={over} className={styles.gameOver}>Game Over!</div>
       </section>
