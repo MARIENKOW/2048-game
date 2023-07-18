@@ -1,20 +1,23 @@
 import styles from './game.module.scss';
 import Square from '../Square/Square'
-import { disablePageScroll, enablePageScroll } from 'scroll-lock';
+import { disablePageScroll, enablePageScroll ,clearQueueScrollLocks , getScrollState} from 'scroll-lock';
 
-export default function Game({data,updateData,over}) {
+export default function Game({ data, updateData, over }) {
 
 
 
    let touchStart = null;
    const touchStartEv = (e) => {
-      document.body.style.overflow='hidden';
       touchStart = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
       disablePageScroll()
+      document.body.style.overflow = 'hidden';
+      console.log(getScrollState())
    }
    const touchEndEv = (e) => {
-      document.body.style.overflow='';
+      clearQueueScrollLocks();
       enablePageScroll()
+      document.body.style.overflow = '';
+      console.log(getScrollState())
       const touchEnd = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
       const difX = touchEnd[0] - touchStart[0]
       const difY = touchEnd[1] - touchStart[1]
@@ -33,7 +36,7 @@ export default function Game({data,updateData,over}) {
             direction = 'ArrowRight'
          }
       }
-      if(direction) return updateData(direction)
+      if (direction) return updateData(direction)
    }
 
    const output = []
