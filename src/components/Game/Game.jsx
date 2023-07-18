@@ -1,5 +1,6 @@
 import styles from './game.module.scss';
 import Square from '../Square/Square'
+import { disablePageScroll, enablePageScroll } from 'scroll-lock';
 
 export default function Game({data,updateData,over}) {
 
@@ -9,9 +10,11 @@ export default function Game({data,updateData,over}) {
    const touchStartEv = (e) => {
       document.body.style.overflow='hidden';
       touchStart = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
+      disablePageScroll()
    }
    const touchEndEv = (e) => {
       document.body.style.overflow='';
+      enablePageScroll()
       const touchEnd = [e.changedTouches[0].pageX, e.changedTouches[0].pageY]
       const difX = touchEnd[0] - touchStart[0]
       const difY = touchEnd[1] - touchStart[1]
@@ -45,7 +48,7 @@ export default function Game({data,updateData,over}) {
    }
 
    return (
-      <section onTouchMove={e=>e.preventDefault()} onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
+      <section onTouchStart={touchStartEv} onTouchEnd={touchEndEv} className={styles.game}>
          {output.map((el, i) => <Square info={el} key={i} />)}
          <div style={over} className={styles.gameOver}>Game Over!</div>
       </section>
