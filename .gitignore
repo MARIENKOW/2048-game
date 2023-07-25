@@ -9,7 +9,7 @@
 /build
 # package.json
 .vscode
-package-lock.json
+# package-lock.json
 README.md
 # testing
 /coverage

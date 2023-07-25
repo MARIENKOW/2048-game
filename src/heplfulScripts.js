@@ -1,3 +1,9 @@
+let startArray = []
+for (let i = 0; i < 4; i++) {
+   startArray.push(Array(4).fill(null))
+}
+
+
 const scripts = {
    degArr: (arr, way = 'right') => {
       const newArr = arr.map(() => []);
@@ -22,7 +28,7 @@ const scripts = {
       const arr = [];
 
       for (let i = 0; i < 4; i++) {
-         sec: for (let j = 0; j < 4; j++) {
+         sec:for (let j = 0; j < 4; j++) {
 
             if (value[i][j] !== null) continue sec;
 
@@ -36,6 +42,7 @@ const scripts = {
          if (arr1[i].reduce((acc, el, j) => acc || el !== arr2[i][j], false)) return false
       }
       return true
-   }
+   },
+   emptyArr:startArray
 }
 export default scripts;

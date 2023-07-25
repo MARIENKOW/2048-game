@@ -12,15 +12,6 @@ body{
 .control{
   display: flex;
   justify-content: space-between;
-  .score{
-    display: inline-block;
-    font-weight: 600;
-    font-size: 25px;
-    color: #ffffff;
-    background-color: #cebfbf;
-    padding: 20px 30px;
-    border-radius: 5px;
-  }
   button{
     border-radius: 5px;
     padding: 15px 20px;

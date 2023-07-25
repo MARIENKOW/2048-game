@@ -1,16 +1,20 @@
-import styles from './App.module.scss'
-import Game from './components/Game/Game'
-import { useEffect, useState } from 'react';
-import startArray from './StartArray';
-import help from './heplfulScripts'
+import { useEffect, useState,useMemo} from 'react';
+import Game from './components/Game/Game';
+import Title from './components/Title/Title';
+import help from './heplfulScripts';
+import styles from './App.module.scss';
+import startInfo from './StartInfo';
+
 
 function App() {
-  const [data, setData] = useState(startArray)
-  const [score, setScore] = useState(0)
-  const [over, setOver] = useState({ display: 'none' })
+  const [data, setData] = useState(startInfo.startArray)
+  const [score, setScore] = useState(startInfo.startScore)
+  const [bestScore,setBestScore] = useState(startInfo.bestScore);
 
-  useEffect(() => addNewSquare(data), [])
-
+  useEffect(() => {
+    const empty = help.takeEmpty(data);
+    if (!empty || empty.length === 16 ) addNewSquare(data);
+  }, [])
   useEffect(() => {
     const onKeyPress = ({ code }) => {
       document.body.style.overflow = 'hidden'
@@ -24,7 +28,7 @@ function App() {
     }
   }, [data])
   useEffect(() => {
-    const onKeyPress = ({ code }) => {
+    const onKeyPress = () => {
       document.body.style.overflow = ''
     }
     window.addEventListener('keyup', onKeyPress);
@@ -33,11 +37,16 @@ function App() {
       window.removeEventListener('keyup', onKeyPress);
     }
   }, [data])
-  useEffect(() => {
-    if (help.takeEmpty(data).length === 0 && !changes('ArrowLeft', data) && !changes('ArrowRight', data) && !changes('ArrowUp', data) && !changes('ArrowDown', data)) {
-      setOver({ display: 'flex' })
+  useEffect(()=>{
+    localStorage.setItem('data',JSON.stringify(data));
+  },[data])
+  useEffect(()=>{
+    localStorage.setItem('startScore',score);
+    if(score>bestScore){
+      setBestScore(score)
+      localStorage.setItem('bestScore',score);
     }
-  }, [data])
+  },[score])
 
 
   function changes(code, dataLink) {
@@ -60,7 +69,7 @@ function App() {
       newData = help.degArr(moveSquare(dataCopy), 'right')
     }
 
-    if (help.checkIdentically(newData, data)) return
+    if (help.checkIdentically(newData, dataLink)) return
 
     return newData
   }
@@ -109,17 +118,24 @@ function App() {
     }
     setData(dataCopy);
   }
-
   function restart(){
     setScore(0)
-    setOver({display:'none'})
-    addNewSquare(startArray)
+    addNewSquare(help.emptyArr)
   }
+
+  const over = useMemo(() => {
+    if (help.takeEmpty(data).length === 0 && !changes('ArrowLeft', data) && !changes('ArrowRight', data) && !changes('ArrowUp', data) && !changes('ArrowDown', data)) {
+
+      return { display: 'flex' }
+    }
+    return {display:'none'}
+  }, [data])
 
   return (
     <div className={styles.app}>
       <section className={styles.control}>
-        <h3 className={styles.score}>Score : {score}</h3>
+        <Title score={score}>Score : </Title>
+        <Title score={bestScore}>Best : </Title>
         <button onClick={restart}>restart</button>
       </section>
       <Game over={over} updateData={(value) => addNewSquare(changes(value, data))} data={data} />
