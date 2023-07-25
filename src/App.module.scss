@@ -9,16 +9,23 @@ body{
   margin: auto;
   padding: 20px 15px;
 }
-.control{
+.container{
   display: flex;
-  justify-content: space-between;
-  button{
-    border-radius: 5px;
-    padding: 15px 20px;
-    font-size: 25px;
-    font-weight: 600;
-    text-transform: uppercase;
-    background-color: #bd8e8e;
-    color: #fff;
-  }
+  // justify-content: space-between;
+  gap: 10px;
+}
+.info{
+  display:flex;
+  flex-direction: column;
+  gap: 10px;
+  flex:1;
+}
+.btn{
+  border-radius: 5px;
+  padding: 15px 30px;
+  font-size: 25px;
+  font-weight: 600;
+  text-transform: uppercase;
+  background-color: #bd8e8e;
+  color: #fff;
 }

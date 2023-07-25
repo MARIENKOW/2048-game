@@ -1,4 +1,4 @@
-import { useEffect, useState,useMemo} from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import Game from './components/Game/Game';
 import Title from './components/Title/Title';
 import help from './heplfulScripts';
@@ -9,11 +9,11 @@ import startInfo from './StartInfo';
 function App() {
   const [data, setData] = useState(startInfo.startArray)
   const [score, setScore] = useState(startInfo.startScore)
-  const [bestScore,setBestScore] = useState(startInfo.bestScore);
+  const [bestScore, setBestScore] = useState(startInfo.bestScore);
 
   useEffect(() => {
     const empty = help.takeEmpty(data);
-    if (!empty || empty.length === 16 ) addNewSquare(data);
+    if (!empty || empty.length === 16) addNewSquare(data);
   }, [])
   useEffect(() => {
     const onKeyPress = ({ code }) => {
@@ -37,16 +37,16 @@ function App() {
       window.removeEventListener('keyup', onKeyPress);
     }
   }, [data])
-  useEffect(()=>{
-    localStorage.setItem('data',JSON.stringify(data));
-  },[data])
-  useEffect(()=>{
-    localStorage.setItem('startScore',score);
-    if(score>bestScore){
+  useEffect(() => {
+    localStorage.setItem('data', JSON.stringify(data));
+  }, [data])
+  useEffect(() => {
+    localStorage.setItem('startScore', score);
+    if (score > bestScore) {
       setBestScore(score)
-      localStorage.setItem('bestScore',score);
+      localStorage.setItem('bestScore', score);
     }
-  },[score])
+  }, [score])
 
 
   function changes(code, dataLink) {
@@ -118,7 +118,7 @@ function App() {
     }
     setData(dataCopy);
   }
-  function restart(){
+  function restart() {
     setScore(0)
     addNewSquare(help.emptyArr)
   }
@@ -128,16 +128,18 @@ function App() {
 
       return { display: 'flex' }
     }
-    return {display:'none'}
+    return { display: 'none' }
   }, [data])
 
   return (
     <div className={styles.app}>
-      <section className={styles.control}>
-        <Title score={score}>Score : </Title>
-        <Title score={bestScore}>Best : </Title>
-        <button onClick={restart}>restart</button>
-      </section>
+      <div className={styles.container}>
+        <section className={styles.info}>
+          <Title score={score}>Score : </Title>
+          <Title score={bestScore}>Best : </Title>
+        </section>
+        <button className={styles.btn} onClick={restart}>restart</button>
+      </div>
       <Game over={over} updateData={(value) => addNewSquare(changes(value, data))} data={data} />
     </div>
   );

@@ -1,9 +1,11 @@
 .score {
-   display: inline-block;
+   display: flex;
    font-weight: 600;
    font-size: 25px;
    color: #ffffff;
    background-color: #cebfbf;
-   padding: 20px 30px;
+   padding: 7px 0;
+   max-width: 170px;
+   justify-content: center;
    border-radius: 5px;
 }
